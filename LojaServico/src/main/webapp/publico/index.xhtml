@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Loja de Serviços</title>
+		<link rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+			integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+			crossorigin="anonymous" />
+	</h:head>
+	<h:body>
+
+
+		<p:toolbar>
+
+			<f:facet name="left">
+				<p:panelGrid rows="1">
+					<h:form id="fmenu_1">
+		<p:growl id="messages" showDetail="true" />					
+						<p:button value="home" href="/index.html" ajax="false" />
+					</h:form>
+				</p:panelGrid>
+			</f:facet>
+			<f:facet name="right">
+				<p:panelGrid cols="2" rows="1">
+					<h:form id="fmenu_2">
+						<p:panelGrid>
+							<p:button value="admin" href="/admin/admin.xhtml" ajax="false" />
+							<p:button value="cliente" href="/cliente/cliente.xhtml"
+								ajax="false" />
+							<p:button id="cmdCarrinho"
+								value="Carrinho (#{carrinhoController.quantidadeItens})"
+								href="/cliente/carrinho.xhtml" ajax="false" />
+						</p:panelGrid>
+					</h:form>
+
+					<form name="logoutForm" action="/LojaServico/logout" method="post">
+						<p:panelGrid >
+							<input type="submit" value="Sair" />
+							<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />
+						</p:panelGrid>
+					</form>
+				</p:panelGrid>
+			</f:facet>
+		</p:toolbar>
+
+		<h:form id="form">
+			<p:dataGrid var="objProduto" value="#{carrinhoController.listagem}"
+				columns="3" layout="grid" rows="12" paginator="false" id="produtos"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="6,12,16">
+
+				<f:facet name="header">
+            Produtos
+        </f:facet>
+
+				<p:panel header="#{objProduto.produto.nome}"
+					style="text-align:center">
+					<h:panelGrid columns="1" style="width:100%">
+						<h:inputHidden value="#{objProduto.produto.id}" />
+						<!-- <p:graphicImage library="/publico/images/produtos" width="40" height="40"
+							name="#{objProduto.produto.id}.jpg" /> -->
+						<p:outputLabel value="#{objProduto.produto.nome}" />
+						<p:outputLabel value="#{objProduto.produto.preco}" />
+						<p:outputLabel value="Quantidade" for="txtQuantidade" />
+						<p:inputNumber id="txtQuantidade"
+							value="#{carrinhoController.quantidade}" />
+						<p:commandButton value="Incluir"
+							update=":fmenu_1:messages :fmenu_2:cmdCarrinho"
+							action="#{carrinhoController.actionInserirProduto}">
+							<f:setPropertyActionListener value="#{objProduto}"
+								target="#{carrinhoController.produtoSelecionado}" />
+							<f:setPropertyActionListener
+								value="#{carrinhoController.quantidade}"
+								target="#{carrinhoController.produtoSelecionado.quantidade}" />
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</p:dataGrid>
+		</h:form>
+	</h:body>
+</f:view>
+</html>

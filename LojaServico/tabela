@@ -1,0 +1,21 @@
+-- Table: public."Medicamento"
+
+-- DROP TABLE public."medicamento";
+
+CREATE TABLE public."medicamento"
+(
+    id integer NOT NULL DEFAULT nextval('"Medicamento_id_seq"'::regclass),
+    nome character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    "principioativo" character varying(100) COLLATE pg_catalog."default" NOT NULL,
+     und character varying(100) COLLATE pg_catalog."default" NOT NULL,
+									   "qtdeestoque" numeric NOT NULL,
+    "datavalidade" date NOT NULL,
+    CONSTRAINT "Medicamento_pkey" PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."medicamento"
+    OWNER to postgres;

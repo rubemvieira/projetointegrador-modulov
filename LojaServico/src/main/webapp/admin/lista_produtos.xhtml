@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Loja de Serviços - Área Administrativa</title>
+		<link rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+			integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+			crossorigin="anonymous" />
+	</h:head>
+	<h:body>
+		<p:growl id="messages" showDetail="true" />
+		<p:toolbar>
+
+			<f:facet name="left">
+				<p:panelGrid rows="1">
+					<h:form id="fmenu_1">
+						<p:button value="home" href="/index.html" ajax="false" />
+					</h:form>
+				</p:panelGrid>
+			</f:facet>
+			<f:facet name="right">
+				<p:panelGrid cols="2" rows="1">
+					<h:form id="fmenu_2">
+						<p:panelGrid>
+							<p:button value="admin" href="/admin/admin.xhtml" ajax="false" />
+							<p:button value="cliente" href="/cliente/cliente.xhtml"
+								ajax="false" />
+							<p:button id="cmdCarrinho"
+								value="Carrinho (#{carrinhoController.quantidadeItens})"
+								href="/cliente/carrinho.xhtml" ajax="false" />
+						</p:panelGrid>
+					</h:form>
+
+					<form name="logoutForm" action="/LojaServico/logout" method="post">
+						<p:panelGrid >
+							<input type="submit" value="Sair" />
+							<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />
+						</p:panelGrid>
+					</form>
+				</p:panelGrid>
+			</f:facet>
+		</p:toolbar>
+		<h:form>
+			<p:dataTable value="#{produtoController.listagem}" var="objProduto">
+				<f:facet name="header">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Produtos" />
+						<h:commandButton value="Novo"
+							action="#{produtoController.actionInserir}" />
+					</p:panelGrid>
+				</f:facet>
+				<p:column headerText="Código">
+					<h:outputLabel value="#{objProduto.id}" />
+				</p:column>
+				<p:column headerText="Nome">
+					<h:outputLabel value="#{objProduto.nome}" />
+				</p:column>
+				<p:column headerText="Preço">
+					<h:outputLabel value="#{objProduto.preco}" />
+				</p:column>
+				<p:column>
+					<h:commandButton value="Editar"
+						action="#{produtoController.actionAlterar(objProduto)}"
+						icon="fas fa-pencil">
+					</h:commandButton>
+				</p:column>
+				<p:column>
+					<h:commandButton value="Excluir"
+						action="#{produtoController.actionExcluir(objProduto)}"
+						icon="fas fa-trash-alt">
+					</h:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</h:body>
+</f:view>
+</html>
