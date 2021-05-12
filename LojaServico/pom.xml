@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 	<name>Loja Serviço</name>
 	<properties>
-		<springsecurity.version>4.0.4.RELEASE</springsecurity.version>
+		<springsecurity.version>5.2.10.RELEASE</springsecurity.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<repositories>
